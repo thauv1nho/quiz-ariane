@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariane 🌻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #FFB6D9, #FFC8E8, #D4A5FF);
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+
+        .cat {
+            position: fixed;
+            font-size: 35px;
+            opacity: 0.2;
+            animation: float 5s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #FF69B4;
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #FF1493;
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            background: #FFE5F1;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #FF69B4, #FF1493);
+            height: 100%;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .question {
+            font-size: 1.2em;
+            color: #8B008B;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 50px;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #FFE5F1, #FFF0F8);
+            border: 2px solid #FFB6D9;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1em;
+            color: #8B008B;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button.correct {
+            background: linear-gradient(135deg, #90EE90, #98FB98);
+            border-color: #32CD32;
+        }
+
+        button.wrong {
+            background: linear-gradient(135deg, #FF6B6B, #FF8787);
+            border-color: #FF0000;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        #final {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #final h2 {
+            color: #FF1493;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        #final p {
+            color: #8B008B;
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        .heart {
+            font-size: 2.5em;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="cat" style="left:10%;top:10%">🐱</div>
+    <div class="cat" style="left:80%;top:20%;animation-delay:1s">😺</div>
+    <div class="cat" style="left:20%;top:70%;animation-delay:2s">😸</div>
+    <div class="cat" style="left:85%;top:75%;animation-delay:0.5s">😻</div>
+    <div class="cat" style="left:50%;top:10%;animation-delay:1.5s">🐈</div>
+
+    <div class="container">
+        <h1>Ariane 🌻</h1>
+        <p class="subtitle">Répond sans triche</p>
+        
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="quizDiv">
+            <div class="question" id="questionText"></div>
+            <div class="answers" id="answersDiv"></div>
+        </div>
+
+        <div id="final">
+            <div class="heart">❤️</div>
+            <h2>Félicitations mon amour !</h2>
+            <p><strong>Ariane, ma femme, je t'aime voilà.</strong></p>
+            <p><strong>Ma future épouse et femme de mes enfants dans moins de 10 ans</strong></p>
+            <div class="heart">💍</div>
+        </div>
+    </div>
+
+<script>
+var questions = [
+    {
+        question: "Quelle est ma couleur préférée ?",
+        answers: ["Rouge", "Bleu", "Vert", "Jaune"],
+        correct: [1]
+    },
+    {
+        question: "Est-ce que Ryan t'aime plus que toi ?",
+        answers: ["Oui", "Non"],
+        correct: [0]
+    },
+    {
+        question: "Tu préfères ?",
+        answers: ["Que je pète", "Que je mange des légumes", "Que je te fasse un massage"],
+        correct: [0, 1]
+    },
+    {
+        question: "Quand je pense à toi je ressens :",
+        answers: ["De l'amour", "Tes pets", "Ton caca"],
+        correct: [0]
+    },
+    {
+        question: "Si un virus vient en France je m'isole où ?",
+        answers: ["À la Réunion", "Avec toi peu importe", "En Bretagne"],
+        correct: [0, 1]
+    },
+    {
+        question: "Je préfère ?",
+        answers: ["Manger des pâtes", "Elon Musk", "Les reptiliens"],
+        correct: [0]
+    },
+    {
+        question: "Le voyage de mes rêves ?",
+        answers: ["Partir en voilier et faire le tour du monde avec toi", "Road trip en Islande", "Tour du Japon"],
+        correct: [0]
+    },
+    {
+        question: "Est-ce que tu m'aimes plus que moi ?",
+        answers: ["Non, Ryan t'aime bien plus et tu le sais", "Oui évidemment", "Oui je t'aime plus que lui"],
+        correct: [0]
+    }
+];
+
+var currentQuestion = 0;
+var selectedAnswers = [];
+
+function updateProgress() {
+    var percent = (currentQuestion / questions.length) * 100;
+    document.getElementById('progressBar').style.width = percent + '%';
+}
+
+function showQuestion() {
+    if (currentQuestion >= questions.length) {
+        document.getElementById('quizDiv').style.display = 'none';
+        document.getElementById('final').style.display = 'block';
+        document.getElementById('progressBar').style.width = '100%';
+        return;
+    }
+
+    selectedAnswers = [];
+    var q = questions[currentQuestion];
+    
+    document.getElementById('questionText').textContent = (currentQuestion + 1) + '. ' + q.question;
+    
+    var html = '';
+    for (var i = 0; i < q.answers.length; i++) {
+        html += '<button onclick="checkAnswer(' + i + ')">' + q.answers[i] + '</button>';
+    }
+    document.getElementById('answersDiv').innerHTML = html;
+}
+
+function checkAnswer(index) {
+    var buttons = document.getElementById('answersDiv').getElementsByTagName('button');
+    var correctAnswers = questions[currentQuestion].correct;
+    
+    var isCorrect = false;
+    for (var i = 0; i < correctAnswers.length; i++) {
+        if (correctAnswers[i] === index) {
+            isCorrect = true;
+            break;
+        }
+    }
+    
+    if (isCorrect) {
+        var alreadySelected = false;
+        for (var i = 0; i < selectedAnswers.length; i++) {
+            if (selectedAnswers[i] === index) {
+                alreadySelected = true;
+                break;
+            }
+        }
+        
+        if (!alreadySelected) {
+            selectedAnswers.push(index);
+            buttons[index].className = 'correct';
+            
+            if (selectedAnswers.length === correctAnswers.length) {
+                setTimeout(function() {
+                    currentQuestion++;
+                    updateProgress();
+                    showQuestion();
+                }, 1000);
+            }
+        }
+    } else {
+        buttons[index].className = 'wrong';
+        setTimeout(function() {
+            buttons[index].className = '';
+        }, 500);
+    }
+}
+
+window.onload = function() {
+    showQuestion();
+    updateProgress();
+};
+</script>
+</body>
+</html>
